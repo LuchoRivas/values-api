@@ -1,3 +1,3 @@
 # values-api
 
-flash & pymongo api
+flask & pymongo api
