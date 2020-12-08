@@ -38,3 +38,4 @@ traitlets==4.3.3
 virtualenv==20.0.30
 wcwidth==0.2.5
 wrapt==1.12.1
+pywin32==228
