@@ -29,7 +29,6 @@ pymongo==3.10.1
 pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2020.1
-pywin32==228
 pyzmq==19.0.1
 six==1.15.0
 toml==0.10.1
@@ -38,4 +37,3 @@ traitlets==4.3.3
 virtualenv==20.0.30
 wcwidth==0.2.5
 wrapt==1.12.1
-pywin32==228
