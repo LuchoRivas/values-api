@@ -5,7 +5,7 @@ from bson import json_util
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb+srv://luigi:Luigi2020@cluster0.o2pfg.mongodb.net/db?retryWrites=true&w=majority'
+app.config['MONGO_URI'] = 'MONGODB_CONNECTION_STR'
 
 mongo = PyMongo(app)
 
