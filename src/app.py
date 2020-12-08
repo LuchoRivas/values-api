@@ -28,4 +28,4 @@ def get_types():
 
 # esto no corre con el debugger
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(threaded=True, port=5000)
