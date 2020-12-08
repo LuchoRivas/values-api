@@ -8,6 +8,10 @@ app.config['MONGO_URI']='mongodb+srv://luigi:Luigi2020@cluster0.o2pfg.mongodb.ne
 
 mongo = PyMongo(app)
 
+@app.route('/')
+def index():
+    return "<spam>Welcome to our server !!</spam>"
+
 @app.route('/values', methods=['GET'])
 def get_values():
     values = mongo.db.values.find_one({}, {'_id': 0, 'creationDate': 0}, sort=[( '_id', pymongo.DESCENDING )])
