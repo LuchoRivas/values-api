@@ -3,9 +3,10 @@ from flask import Flask, request, jsonify, Response
 from flask_pymongo import PyMongo
 from bson import json_util
 from datetime import datetime
+from constants import MONGO_URI
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb+srv://luigi:Luigi2020@cluster0.o2pfg.mongodb.net/db?retryWrites=true&w=majority'
+app.config['MONGO_URI'] = MONGO_URI
 
 mongo = PyMongo(app)
 
