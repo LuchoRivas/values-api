@@ -86,10 +86,10 @@ def getDbValues():
         print('an error occurred trying get values from db >>', e)
 
 
-def execute():
-    getValues()
-    time.sleep(60)
+# def execute():
+#     getValues()
+#     time.sleep(60)
 
 
-while True:
-    execute()
+# while True:
+#     execute()
