@@ -4,10 +4,10 @@ import time
 import pymongo
 from datetime import datetime
 from bson.objectid import ObjectId
-from constants import MONGO_CONN_STR
+from constants import MONGO_URI
 from bson.json_util import dumps
 
-client = pymongo.MongoClient(MONGO_CONN_STR)
+client = pymongo.MongoClient(MONGO_URI)
 
 collection = client.db.values
 types_collection = client.db.types
@@ -121,10 +121,10 @@ def getDbValues():
         print('an error occurred trying get values from db >>', e)
 
 
-# def execute():
-#     getValues()
-#     time.sleep(60)
+def execute():
+    getValues()
+    time.sleep(60)
 
 
-# while True:
-#     execute()
+while True:
+    execute()
