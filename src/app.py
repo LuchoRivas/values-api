@@ -4,7 +4,7 @@ from flask_pymongo import PyMongo
 from bson import json_util
 from datetime import datetime
 from constants import MONGO_URI
-import src.soup 
+# import src.soup 
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = MONGO_URI
