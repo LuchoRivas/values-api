@@ -4,17 +4,19 @@ import time
 import pymongo
 from datetime import datetime
 from bson.objectid import ObjectId
+from constants import MONGO_CONN_STR
+from bson.json_util import dumps
 
-client = pymongo.MongoClient(
-    "MONGODB_CONNECTION_STR")
+client = pymongo.MongoClient(MONGO_CONN_STR)
 
 collection = client.db.values
+types_collection = client.db.types
 query = {"creationDate": {"$lt": datetime.now()}}
 sortByDate = [{"creationDate", -1}]
 
 
 def __eq__(self, other):
-    return ((self["blue"], other["blue"]) == (self["oficial"], other["oficial"]))
+    return ((self["blue"]["buy"], other["blue"]["sell"]) == (self["blue"]["buy"], other["blue"]["sell"]))
 
 
 def getValues():
@@ -32,7 +34,6 @@ def getValues():
     precio_compra_liqui = prices[6].text
     precio_venta_liqui = prices[7].text
 
-    # Guardar bien / crear relacion con types
     newValues = {
         "oficial": {
             "buy": precio_compra_oficial.strip(),
@@ -60,12 +61,45 @@ def getValues():
     dbValues = getDbValues()
 
     if(dbValues == None):
-        saveValues(newValues)
+        values_to_save = addTypes(newValues)
+        saveValues(values_to_save)
+
     else:
-        if(__eq__(dbValues, newValues)):
+        diff = __eq__(dbValues, newValues)
+        if(diff):
             return
         else:
-            saveValues(newValues)
+            values_to_save = addTypes(newValues)
+            saveValues(values_to_save)
+
+
+def addTypes(values):
+    types_db = types_collection.find({})
+    types = list(types_db)
+
+    for value in values:
+        if(value == "blue"):
+            blue = values["blue"]
+            blue["name"] = types[0]["name"]
+            blue["_id"] = types[0]["_id"]
+            values["blue"] = blue
+        if(value == "bolsa"):
+            bolsa = values["bolsa"]
+            bolsa["name"] = types[1]["name"]
+            bolsa["_id"] = types[1]["_id"]
+            values["bolsa"] = bolsa
+        if(value == "oficial"):
+            oficial = values["oficial"]
+            oficial["name"] = types[2]["name"]
+            oficial["_id"] = types[2]["_id"]
+            values["oficial"] = oficial
+        if(value == "liqui"):
+            liqui = values["liqui"]
+            liqui["name"] = types[3]["name"]
+            liqui["_id"] = types[3]["_id"]
+            values["liqui"] = liqui
+
+    return values
 
 
 def saveValues(values):
@@ -79,7 +113,8 @@ def saveValues(values):
 
 def getDbValues():
     try:
-        cursor = collection.find_one({}, sort=[('_id', pymongo.DESCENDING)])
+        cursor = collection.find_one({}, {'_id': 0, 'creationDate': 0}, sort=[
+                                     ('_id', pymongo.DESCENDING)])
         return cursor
 
     except Exception as e:
